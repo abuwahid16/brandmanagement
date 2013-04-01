@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <brandgallery_index_index>
+        <reference name="head">                                       
+            <action method="addCss"><stylesheet>css/fancybox/jquery.fancybox.css</stylesheet></action>
+            <action method="addItem"><type>skin_js</type><name>js/fancybox/jquery.fancybox.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="brandgallery/brandgallery" name="brandgallery" template="brandgallery/brandgallery.phtml" />
+        </reference>
+    </brandgallery_index_index>
+</layout> 

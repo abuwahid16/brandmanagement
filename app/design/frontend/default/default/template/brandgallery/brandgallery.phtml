@@ -1,0 +1,27 @@
+<?php
+$brandGallery = $this->getBrandgalleryByBrand();
+if ($brandGallery != null):
+    $galleryPath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "brand/gallery/";
+    $i = 0;
+    ?>
+    <?php foreach ($brandGallery as $brandImage) : ?>
+        <a <?php if ($i++ >= 1) : ?> style="display: none;" <?php endif; ?> class="fancybox fancy_thumb" href="<?php echo $galleryPath . $brandImage->getBrandimage(); ?>" data-fancybox-group="gallery" title="<?php echo $brandImage->getTitle(); ?>">
+            <img src="<?php echo $galleryPath . "resize/" . $brandImage->getBrandimage(); ?>" alt="<?php echo $brandImage->getImageAlt(); ?>" />
+        </a>
+    <?php endforeach; ?>
+    <span id="view-slide" style="color:#BD0D2E;">View Gallery</span>
+<?php else: ?>
+    <span>No Brand Images Available</span>
+<?php endif; ?>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery('.fancybox').fancybox({
+            nextClick : true  
+        });
+    });
+</script>
+<style type="text/css">
+    .fancybox-custom .fancybox-skin {
+        box-shadow: 0 0 50px #222;
+    }
+</style>

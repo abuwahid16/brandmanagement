@@ -1,0 +1,86 @@
+<div class="page-title">
+    <h1>Brand Information</h1>
+</div>
+<?php
+if ($countryCode = $this->getRequest()->getParam('id')) {
+    $brands = $this->getBrandlistbycountry($this->getRequest()->getParam('id'));
+} else {
+    $brands = $this->getBrandlist();
+}
+
+$countryList = Mage::getModel('brandmanagement/brandmanagement')->getWineCountry();
+if (is_array($countryList) && isset($countryList[0]['value']) && $countryList[0]['value'] == '')
+    unset($countryList[0]);
+$thumbPath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "brand/images/";
+?>
+<div class="brand-wrapper">
+    <a class="view-all-brands" href="<?php echo $this->getUrl('wine-info/brand-info'); ?>" title="All Brands">View all brands</a>
+    <ul class="flag-list">
+        <?php if (count($countryList)): 
+            $i = 1; ?>
+            <?php foreach ($countryList as $country) : ?>
+                <li <?php if(($i++%10) == 0) { ?> style="margin-right: 0;" <?php } ?>>
+                    <a href="<?php echo $this->getUrl('brand-info/index/list/', array('id' => $country['value'])); ?>">
+                        <img src="<?php echo $this->getSkinUrl('images/flag/' . $country['value'] . '.jpg'); ?>" alt="<?php echo $country['label'] ?>" width="48" height="32" />
+                    </a>
+                    <span><?php echo $country['label'] ?></span></li>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </ul>
+    <div class="current-brand">
+        <?php if ($countryCode != '') : ?>
+            <?php
+            $attributeId = Mage::getModel('eav/entity_attribute_option')->load($countryCode)->getAttributeId();
+            $attribute = Mage::getModel('eav/entity_attribute')->load($attributeId);
+            $countryLabel = $attribute->getSource()->getOptionText($countryCode);
+            ?>
+            <img src="<?php echo $this->getSkinUrl('images/flag/' . $countryCode . '.jpg'); ?>" alt="<?php echo $countryLabel; ?>" />
+            <span>
+                <?php echo $countryLabel; ?>
+            </span>
+        <?php else: ?>	
+            <span>All Brands</span>
+        <?php endif; ?>
+    </div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="brand-list">
+        <tr>
+            <th width="125">&nbsp;</th>
+            <th width="53">&nbsp;</th>
+            <th width="254">Brands</th>
+            <th width="203">Regions</th>
+            <th>&nbsp;</th>
+        </tr>
+
+        <?php if (!count($brands)): ?>
+            <tr>
+                <td class="brand-place" colspan="6">
+                    <p>Sorry no brand information available.</p>
+                </td>
+            </tr> 
+        <?php else: ?>  
+            <?php foreach ($brands as $brand) : ?>
+                <?php
+                $attributeId = Mage::getModel('eav/entity_attribute_option')->load($brand->getBrandRegion())->getAttributeId();
+                $attribute = Mage::getModel('eav/entity_attribute')->load($attributeId);
+                $regionLabel = $attribute->getSource()->getOptionText($brand->getBrandRegion());
+                ?>
+                <tr>
+                    <td class="brand-place">
+                        <?php if ($brand->getBrandimagethumb() != ''): ?>
+                            <img src="<?php echo $thumbPath . 'thumb/' . $brand->getBrandimagethumb(); ?>" alt="<?php echo $brand->getTitle(); ?>" />
+                        <?php else : ?>
+                            <?php echo $brand->getTitle(); ?>
+                        <?php endif; ?>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td><?php echo $brand->getTitle(); ?></td>
+                    <td><?php echo $regionLabel; ?></td>
+                    <td>
+                        <a href="<?php echo $this->getUrl('brand-info/'.$brand->getUrlKey()); ?>" alt="View Winery info" class="brand-details-link">Winery info</a>
+                        <a href="<?php echo $this->getUrl('browse-wine/'.$brand->getUrlKey()); ?>"  alt="Browse Wines" class="brand-details-link bottom">Browse Wines</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </table>
+</div>

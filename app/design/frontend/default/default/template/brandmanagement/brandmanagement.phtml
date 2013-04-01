@@ -1,0 +1,25 @@
+<?php
+$brands = $this->getBrandmanagement($this->getRequest()->getParam('brand'));
+$thumbPath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . "brand/images/thumb/";
+?>
+<?php if (count($brands)): ?>
+    <?php foreach ($brands as $brandData): ?>
+        <div class="listing-brand" style="clear:both;">
+            <table style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td width="180"><img src="<?php echo $thumbPath . $brandData->getBrandimagethumb(); ?>" alt="<?php echo $brandData->getTitle(); ?>" /></td>
+                        <td width="370"><strong><?php echo $brandData->getTitle(); ?></strong>
+                            <?php echo $brandData->getShortText(); ?>
+                        </td>
+                        <?php /*
+                        <td class="last"><a href="<?php echo $this->getUrl('brand-info/index/brand/', array('id' => $brandData->getBrand())); ?>">More Info</a></td>
+                         * 
+                         */?>
+                        <td class="last"><a href="<?php echo $this->getUrl('brand-info/'.$brandData->getUrlKey()); ?>">More Info</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>

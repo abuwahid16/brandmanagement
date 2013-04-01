@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <WSA_Brandgallery>
+            <active>true</active>
+            <codePool>local</codePool>
+        </WSA_Brandgallery>
+    </modules>
+</config> 

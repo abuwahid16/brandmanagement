@@ -1,0 +1,23 @@
+<?php if ($this->getBrand()->getBrandmanagementId()): ?>
+    <div class="content-page" style="clear:both; padding-bottom:60px;">
+        <!--strong><?php echo $this->getBrand()->getTitle(); ?></strong-->
+        <?php /*if ($this->getBrand()->getBrandimage()): ?>
+            <div class="brand_banner">
+                <?php
+                $width = "";
+                list($img_width, $img_height) = getimagesize('media/brand/images/'.$this->getBrand()->getBrandimage());
+                if ($img_width > 752): $width = "752";
+                endif;
+                ?>
+                <img style="clear: both; display: block;" src="<?php echo $this->getImagePath(); ?>" alt="<?php echo $this->getBrand()->getTitle(); ?>" width="<?php echo $width;?>" height="" />            
+            </div>
+        <?php endif;*/ ?>
+        <div class="brand_content">
+            <?php echo $this->getBrand()->getText(); ?>
+        </div>
+
+        <div class="brand_gallery">
+            <?php echo $this->getChildHtml('brand-gallery');?>
+        </div>
+    </div>
+<?php endif; ?>
