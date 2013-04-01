@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+* @category   WSA
+* @package    WSA_Brandgallery
+*/
+-->
+<config>
+    <modules>
+        <WSA_Brandgallery>
+            <version>0.1.0</version>
+        </WSA_Brandgallery>
+    </modules>
+    <frontend>
+        <routers>
+            <brandgallery>
+                <use>standard</use>
+                <args>
+                    <module>WSA_Brandgallery</module>
+                    <frontName>brandgallery</frontName>
+                </args>
+            </brandgallery>
+        </routers>
+        <layout>
+            <updates>
+                <brandgallery>
+                    <file>brandgallery.xml</file>
+                </brandgallery>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <brandgallery>
+                <use>admin</use>
+                <args>
+                    <module>WSA_Brandgallery</module>
+                    <frontName>brandgallery</frontName>
+                </args>
+            </brandgallery>
+        </routers>
+    </admin>
+    <adminhtml>
+        <!--menu>
+            <brandgallery module="brandgallery">
+                <title>Brandgallery</title>
+                <sort_order>71</sort_order>               
+                <children>
+                    <items module="brandgallery">
+                        <title>Manage Gallery</title>
+                        <sort_order>0</sort_order>
+                        <action>brandgallery/adminhtml_brandgallery</action>
+                    </items>
+                </children>
+            </brandgallery>
+        </menu--> 
+        <menu>
+            <brandmanagement module="brandmanagement">              
+                <children>
+                    <brandgallery module="brandgallery">
+                        <title>Manage Gallery</title>
+                        <sort_order>10</sort_order>
+                        <action>brandgallery/adminhtml_brandgallery</action>
+                    </brandgallery>
+                </children>
+            </brandmanagement>
+        </menu>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <WSA_Brandgallery>
+                            <title>Brandgallery Module</title>
+                            <sort_order>10</sort_order>
+                        </WSA_Brandgallery>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <brandgallery>
+                    <file>brandgallery.xml</file>
+                </brandgallery>
+            </updates>
+        </layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <brandgallery>
+                <class>WSA_Brandgallery_Model</class>
+                <resourceModel>brandgallery_mysql4</resourceModel>
+            </brandgallery>
+            <brandgallery_mysql4>
+                <class>WSA_Brandgallery_Model_Mysql4</class>
+                <entities>
+                    <brandgallery>
+                        <table>brandgallery</table>
+                    </brandgallery>
+                </entities>
+            </brandgallery_mysql4>
+        </models>
+        <resources>
+            <brandgallery_setup>
+                <setup>
+                    <module>WSA_Brandgallery</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </brandgallery_setup>
+            <brandgallery_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </brandgallery_write>
+            <brandgallery_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </brandgallery_read>
+        </resources>
+        <blocks>
+            <brandgallery>
+                <class>WSA_Brandgallery_Block</class>
+            </brandgallery>
+        </blocks>
+        <helpers>
+            <brandgallery>
+                <class>WSA_Brandgallery_Helper</class>
+            </brandgallery>
+        </helpers>
+    </global>
+</config>
